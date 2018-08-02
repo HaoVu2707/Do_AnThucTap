@@ -1,0 +1,80 @@
+<nb-card>
+  <nb-card-header>
+    {{ 'customer' | translate }}
+    <span class="pull-right">
+      <div class="row">
+        <div class="col-sm-6">
+          <showed-columns-button [showedColumnList]="showedColumnList"></showed-columns-button>
+        </div>
+        <div class="col-sm-6">
+          <button class="btn btn-outline-primary" (click)="getList()">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+    </span>
+  </nb-card-header>
+  <nb-card-body>
+    <form (ngSubmit)="onClickSearchBtn()">
+      <div class="row default-vertical-margin">
+        <div class="col-sm-6">
+          <div class="input-group">
+            <input type="text" class="form-control" name="search" [(ngModel)]="keyword" placeholder="{{ 'demo_search_placeholder' | translate }}">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="submit">{{ 'search' | translate}}</button>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <button class="pull-right btn btn-primary" (click)="onClickAddBtn()">{{ 'add' | translate}}</button>
+        </div>
+      </div>
+      <div class="row">
+        <table class="table">
+          <thead>
+            <td *ngFor="let showedColumn of showedColumnList" [hidden]="!helperService.isShowedColumn(showedColumn.name , showedColumnList )"
+              [ngClass]="helperService.getSortableCssClass(sort , showedColumn.name ,   showedColumn.sortable )" (click)="onChangeSortedField(showedColumn.name , showedColumn.sortable)">{{ showedColumn.translateKey | translate }}</td>
+            <td></td>
+
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of dataList">
+              <td *ngIf="helperService.isShowedColumn('userName', showedColumnList)">{{ item.userName }}</td>
+              <td *ngIf="helperService.isShowedColumn('fullName', showedColumnList)">{{ item.lastName }}{{ item.firstName }}</td>
+              <td *ngIf="helperService.isShowedColumn('email', showedColumnList)">{{ item.email }}</td>
+              <td *ngIf="helperService.isShowedColumn('phoneNumber', showedColumnList)">{{ item.phoneNumber }}</td>
+              <td *ngIf="helperService.isShowedColumn('address', showedColumnList)">{{ item.address }}</td>
+              <td *ngIf="helperService.isShowedColumn('roleNames', showedColumnList)">{{ helperService.toLowercase(item.roleNames[0]) }}</td>
+              <td *ngIf="helperService.isShowedColumn('isActive', showedColumnList)">
+                <span *ngIf="item.isActive === true" class="text-primary"> {{'active' | translate}} </span>
+                <span *ngIf="item.isActive === false" class="text-danger"> {{'pause' | translate}} </span>
+              </td>
+
+              <td>
+                <button type="button" class="btn btn-sm btn-outline-secondary" placement="bottom" #p="ngbPopover" (document:click)="p.close()"
+                  (click)="$event.stopPropagation()" [ngbPopover]="popContent">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                </button>
+                <ng-template #popContent>
+                  <div class="customize-action-button customize-edit-button" (click)="onClickEditBtn(item)">
+                    <i class="fa fa-pencil" aria-hidden="true"></i> {{'edit' | translate}}
+                  </div>
+                  <div *ngIf="item.isActive === false" class="customize-action-button customize-delete-button" (click)="onClickDeleteBtn(item)">
+                    <i class="fa fa-trash" aria-hidden="true"></i> {{'delete' | translate}}
+                  </div>
+                  <div *ngIf="item.isActive === true" class="customize-action-button customize-delete-button" (click)="onClickPauseBtn(item)">
+                    <i class="fa fa-pause" aria-hidden="true"></i> {{'pause' | translate}}
+                  </div>
+                  <div *ngIf="item.isActive === false" class="customize-action-button customize-edit-button" (click)="onClickActiveBtn(item)">
+                    <i class="fa fa-check" aria-hidden="true"></i> {{'active' | translate}}
+                  </div>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ngb-pagination class="pull-right" [collectionSize]="totalSize" [(page)]="page" (pageChange)="onPageChange($event)"></ngb-pagination>
+    </form>
+  </nb-card-body>
+</nb-card>

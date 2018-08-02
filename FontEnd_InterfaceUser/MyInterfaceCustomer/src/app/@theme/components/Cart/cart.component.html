@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+      <span>{{'Cart' | translate }}</span>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<form #dataForm="ngForm" (ngSubmit)="onClickOrderBtn()" >
+  <div class="modal-body">
+
+
+    <div class="row">
+      <div class="col-xxxl-3 col-md-6" *ngFor="let Service of listAllServices_cart ;let i = index">
+        <div class="product" >
+          <ngx-status-card  title="{{Service.name}}" type="{{Service.imageUrl}}" price = "{{Service.price}}" discount = "{{Service.discount}}">
+            <i class="nb-lightbulb"></i>
+          </ngx-status-card>
+
+        </div>
+        <div class="close">
+          <button type="button" class="close" aria-label="Close" (click)="removeProductFromList(Service)">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="quanlity">
+          <div class="input-group bootstrap-touchspin">
+            <span class="input-group-btn">
+              <button class="btn btn-default bootstrap-touchspin-down" (click)= "clickDownQuantityButton(Service.id)" type="button">-</button>
+            </span>
+            <span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;"></span>
+            <!-- <div class = "form-group"> -->
+              <input type="number" class="form-control" required pattern="[0-9]+" id="{{Service.id}}" name ="qualitychange" class="form-control quantity-r2 quantity js-quantity-product"
+              (keyup)= "Service.amount = $event.target.value; onKeyUp(Service.id,Service.amount)" autofocus min="0" data-js-qty="" [value]="Service.amount" style="display: block;">
+              
+            <!-- </div> -->
+            
+            <span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;"></span>
+            <span class="input-group-btn">
+              <button class="btn btn-default bootstrap-touchspin-up" (click)= "clickUpQuantityButton(Service.id)" type="button">+</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <h1>Tổng tiền: <span>{{TotalMoney}} </span> </h1>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" >{{'Order' | translate}}</button>
+  </div>
+
+</form>
+
+
+

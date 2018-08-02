@@ -1,0 +1,67 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span *ngIf="!isEditMode">{{'add_Branch' | translate }}</span>
+        <span *ngIf="isEditMode">{{'edit_Branch' | translate }}</span>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form #dataForm="ngForm" (ngSubmit)="onClickSaveBtn()" >
+  <div class="modal-body">
+      <div class="row">
+          <div class="col-sm-6">
+              <div class="form-group">
+                  <label>{{'name' | translate }}<i class="star">*</i></label>
+                  <input type="text" autofocus class="form-control" required [(ngModel)]="model.name"
+                   name="name" #name="ngModel"
+                  (ngModelChange)="onChangeNameValue(model.id, model.name)">
+                  <small class="form-text error" *ngIf="name.errors?.required && name?.touched">
+                      {{ "is_required" | translate }}
+                  </small>
+              </div>
+          </div>
+          <div class="col-sm-6">
+              <div class="form-group">
+                  <label for="phone">{{'phone' | translate }}<i class="star">*</i></label>
+                  <input type="nummber" class="form-control" required pattern="[0-9]+" [(ngModel)]="model.phoneNumber" id="phoneNumber" name="phoneNumber"
+                      #phoneNumber="ngModel" currencyMask >
+                  <small class="form-text error" *ngIf="phoneNumber.errors?.required && phoneNumber.touched">
+                      {{ "is_required" | translate }}
+                  </small>
+                  <small class="form-text error" *ngIf="phoneNumber.errors?.pattern && phoneNumber.touched">
+                      {{ "number_only" | translate }}
+                  </small>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-12">
+              <div class="form-group">
+                  <label for="companyName">{{'companyName' | translate }}<i class="star">*</i></label>
+                  <select class="form-control" required [(ngModel)]="model.companyId"  name="companyName" #company="ngModel">
+                    <option value="{{item.id}}" *ngFor="let item of companyList | sort:'name' " >{{item.name}}</option>
+                  </select>
+                </div>
+          </div>
+      </div>
+
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="form-group">
+                  <label for="address">{{'address' | translate }}<i class="star">*</i></label>
+                  <input type="text" class="form-control" required  [(ngModel)]="model.address" id="address" name="address"
+                      #address="ngModel">
+                  <small class="form-text error" *ngIf="address.errors?.required && address.touched">
+                      {{ "is_required" | translate }}
+                  </small>
+          </div>
+      </div>
+  </div>
+
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="!dataForm.form.valid" >{{'save' | translate}}</button>
+  </div>
+</form>

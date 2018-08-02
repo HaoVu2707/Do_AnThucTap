@@ -1,0 +1,27 @@
+@import '../../styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/bootstrap/breakpoints';
+
+@include nb-install-component() {
+
+.product{
+  position: relative;
+}
+.close{
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
+.quanlity{
+  max-height:  2rem;
+  max-width: 12rem;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.input-group{
+  max-width: 100%!important;
+  max-height: 100%;
+}
+}
+

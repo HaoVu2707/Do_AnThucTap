@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+      <span>{{'Cart' | translate }}</span>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<form #dataForm="ngForm" (ngSubmit)="onClickConFirmBtn()" >
+  <div class="modal-body">
+    <div class="row">
+      <h3>Địa chỉ nhận đơn hàng</h3>
+    </div>
+
+     <div class="row">
+        <div class="col-sm-12">
+          <strong> <span>{{user.name}}</span> </strong>
+        </div>
+        <div class="col-sm-12">
+            <i>Địa chỉ : {{user.address}}</i>
+        </div>
+        <div class="col-sm-12">
+            <i>Số điện thoại : {{user.phoneNumber}}</i>
+        </div>
+    <!--   <div class="col-xxxl-3 col-md-6" *ngFor="let Service of listAllServices_cart ;let i = index">
+        <div class="product" >
+          <ngx-status-card  title="{{Service.name}}" type="{{Service.imageUrl}}" price = "{{Service.price}}" discount = "{{Service.discount}}">
+            <i class="nb-lightbulb"></i>
+          </ngx-status-card>
+
+        </div>
+        <div class="close">
+          <button type="button" class="close" aria-label="Close" (click)="removeProductFromList(Service)">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="quanlity">
+          <div class="input-group bootstrap-touchspin">
+            <span class="input-group-btn">
+              <button class="btn btn-default bootstrap-touchspin-down" (click)= "clickDownQuantityButton(Service.id)" type="button">-</button>
+            </span>
+            <span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;"></span>
+            <input type="tel" id="{{Service.id}}" name ="qualitychange" class="form-control quantity-r2 quantity js-quantity-product"
+              (keyup.enter)= "Service.amount = $event.target.value; onKeyUp(Service.id,Service.amount)" autofocus min="0" data-js-qty="" [value]="Service.amount" style="display: block;">
+            <span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;"></span>
+            <span class="input-group-btn">
+              <button class="btn btn-default bootstrap-touchspin-up" (click)= "clickUpQuantityButton(Service.id)" type="button">+</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>-->
+    </div>
+  </div>
+
+
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" >{{'conFirm' | translate}}</button>
+  </div>
+
+</form>
+
+
+

@@ -1,0 +1,17 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span>{{'pause_customer' | translate }}</span>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form #dataForm="ngForm">
+    <div class="modal-body">
+        <div>{{ 'pause_customer_message' | translate}}</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-hero-secondary" (click)="activeModal.close()">{{'cancel' | translate}}</button>
+        <button type="button" class="btn btn-danger" (click)="onClickPauseBtn()">{{'pause' | translate}}</button>
+    </div>
+</form>

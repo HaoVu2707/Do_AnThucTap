@@ -1,0 +1,156 @@
+<!-- <div class="modal-header">
+    <h4 class="modal-title">
+        <span *ngIf="!isEditMode">{{'add_customer' | translate }}</span>
+        <span *ngIf="isEditMode">{{'edit_customer' | translate }}</span>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form #dataForm="ngForm" (ngSubmit)="onClickSaveBtn()">
+    <div class="modal-body">
+        <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="Name">{{'name_customer' | translate }}<i class="star">*</i></label>
+                        <input type="text" autofocus class="form-control" required [(ngModel)]="model.name"
+                        id="name" name="name" #name="ngModel"
+                        (ngModelChange)="onChangeNameValue(model.id, model.name)">
+                        <small class="form-text error" *ngIf="name.errors?.required && name.touched">
+                            {{ "is_required" | translate }}
+                        </small>
+                        <small class="form-text error" *ngIf="!name.errors?.required && name.touched && isDuplicatedName">
+                            {{ "duplicated_value" | translate }}
+                        </small>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>{{'code_customer' | translate }}<i class="star">*</i></label>
+                        <input type="text" class="form-control"
+                        (ngModelChange)="onChangeCustomerCode($event)"
+                          required [(ngModel)]="model.code"  name="code"
+                        #code="ngModel" >
+                        <small class="form-text error" *ngIf="code.errors?.required && code.touched">
+                            {{ "is_required" | translate }}
+                        </small>
+                        <small class="form-text error" *ngIf="!code.errors?.pattern && code.touched && isDuplicatedCode">
+                            {{ "duplicatedCode_value" | translate }}
+                        </small>
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="Address">{{'address_customer' | translate }}</label>
+                    <textarea rows="1" class="form-control" id="address" name="address" [(ngModel)]="model.address"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="birthDate">{{'birthdate_customer' | translate }}</label>
+                    <div class="input-group">
+                        <input class="form-control" required placeholder="{{ 'day_month_year' | translate }}" id="birthDate" name="birthDate"
+                            [(ngModel)]="selectedDate"
+                            ngbDatepicker #birthDate="ngModel" #d="ngbDatepicker">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" (click)="d.toggle()" type="button">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="phoneNumber">{{'phonenumber_customer' | translate }}<i class="star">*</i></label>
+                        <input type="text" class="form-control" required pattern="[0-9]+" [(ngModel)]="model.phoneNumber" name="phoneNumber"
+                        #phoneNumber="ngModel" currencyMask>
+                        <small class="form-text error" *ngIf="helperService.isEmptyInput(phoneNumber)">
+                            {{ "is_required" | translate }}
+                        </small>
+                        <small class="form-text error" *ngIf="companyPhone.errors?.pattern && companyPhone.touched">
+                            {{ "number_only" | translate }}
+                        </small>
+                    </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                        <label for="email">{{'email_customer' | translate }}</label>
+                        <textarea rows="1" class="form-control" name="email" [(ngModel)]="model.email" ></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="CompanyName">{{'name_company' | translate }}</label>
+                        <input type="text" autofocus class="form-control"  name="companyName" [(ngModel)]="model.companyName" >
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="companyTaxCode">{{'code_company' | translate }}</label>
+                        <input type="text" class="form-control" id="companyTaxCode" name="companyTaxCode" [(ngModel)]="model.companyTaxCode">
+                    </div>
+                </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="CompanyAddress">{{'address_company' | translate }}</label>
+                    <textarea rows="1" class="form-control" id="companyAddress" name="companyAddress" [(ngModel)]="model.companyAddress"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <label for="companyPhone">{{'phonenumber_company' | translate }}</label>
+                <input type="text" class="form-control" required pattern="[0-9]+" [(ngModel)]="model.companyPhone"
+                 name="companyPhone" #companyPhone="ngModel" currencyMask>
+                <small class="form-text error" *ngIf="companyPhone.errors?.pattern && companyPhone.touched">
+                    {{ "number_only" | translate }}
+                </small>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="companyEmail">{{'email_company' | translate }}</label>
+                        <input type="text" autofocus class="form-control" name="companyEmail" [(ngModel)]="model.companyEmail">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="shipContactName">{{'name_shipcontact' | translate }}</label>
+                        <textarea rows="1" class="form-control"  name="shipContactName" [(ngModel)]="model.shipContactName" ></textarea>
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="shipPhone">{{'phonenumber_shipcontact' | translate }}</label>
+                        <input type="text" class="form-control" required pattern="[0-9]+" [(ngModel)]="model.shipPhone" name="shipPhone"
+                        #shipPhone="ngModel" currencyMask>
+                        <small class="form-text error" *ngIf="shipPhone.errors?.pattern && shipPhone.touched">
+                            {{ "number_only" | translate }}
+                        </small>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="shipAddress">{{'address_shipcontact' | translate }}</label>
+                        <textarea rows="1" class="form-control" id="shipAddress" name="shipAddress" [(ngModel)]="model.shipAddress" ></textarea>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-left" *ngIf="!isEditMode">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled] ="!dataForm.form.valid">{{'save' | translate}}</button>
+    </div>
+</form> -->

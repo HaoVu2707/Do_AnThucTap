@@ -1,0 +1,73 @@
+<div class="modal-header">
+  <h4 class="modal-title">
+      <span>{{'myOrder' | translate }}</span>
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+      <table class="table">
+          <thead>
+              <td>{{ 'order_code' | translate}}</td>
+              <td>{{ 'totalMoney' | translate}}</td>
+              <td>{{ 'createdDate' | translate}}</td>
+              <td></td>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of allOrders ">
+              <td *ngIf="Status == order.status">{{ order.code }}</td>
+              <td *ngIf="Status == order.status">{{ order.totalMoney }}</td>
+              <td *ngIf="Status == order.status">{{ helperService.convertJSONDatetoDayMonthYearHourMinute(order.createdDateTime) }}</td>
+              <td *ngIf="Status == order.status">
+                  <button type="button" class="btn btn-primary"
+                   (click)="onClickBtnDestroy(order)">
+                      <i class="" aria-hidden="true">{{'destroy' | translate}}</i>
+                  </button>
+                  <!-- <ng-template #popContent>
+                      <div class="customize-action-button customize-edit-button">
+                          <i class="fa fa-eye" aria-hidden="true"></i> {{'detail' | translate}}
+                      </div>
+                      <div class="customize-action-button customize-delete-button" (click)="onClickBtnDestroy(order)">
+                          <i class="fa fa-times" aria-hidden="true"></i> {{'destroy' | translate}}
+                      </div>
+                  </ng-template> -->
+              </td>
+          </tr>
+
+              <!-- <tr *ngFor="let product of model.productList">
+                  <td class="text-small">{{ product.code}}</td>
+                  <td class="text-small">{{ product.name}}</td>
+                  <td>
+                      <span>{{ product.amount | spaceReplacer }}</span>
+                      <span class="ml-1">{{product.unit}}</span>
+                  </td>
+                  <td>
+                      <div>{{ ( model.isRetail? product.salePrice : product.wholeSalePrice) | spaceReplacer
+                          }}
+                      </div>
+                      <small *ngIf="product.listedWholeSalePrice && product.listedWholeSalePrice != product.wholeSalePrice" class="text-right">
+                          {{'listed_price' | translate}}: {{ product.listedWholeSalePrice }}
+                      </small>
+                  </td>
+                  <td>{{ product.totalMoney | spaceReplacer }}</td>
+                  <td>
+                      <div *ngFor="let detailAmount of product.detailAmountList">
+                          <span *ngIf="detailAmount.amount > 0">{{detailAmount.productionWeekYear}}: {{detailAmount.amount}} </span>
+                      </div>
+                  </td>
+                  <td>
+                      <pre>{{product.serialNumber}}</pre>
+                  </td>
+                  <td>
+                      <button type="button" class="btn btn-tn btn-primary btn-tn-square" (click)="removeProductFromList(i)">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                    </td>
+              </tr>
+          </tbody> -->
+
+      </table>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span>{{'order_detail' | translate }}</span>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+        <i aria-hidden="true" class="fa fa-times"></i>
+    </button>
+</div>
+<form #dataForm="ngForm">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-9 utils-border">
+                <div class="row my-1">
+                    <div class="col-sm-6">
+                        <span>{{ 'CreatedDate' | translate }}:</span> {{ helperService.convertJSONDatetoDayMonthYearHourMinute(model.createdDate)}}
+                    </div>
+                </div>
+
+                <div class="row my-1">
+                    <div class="col-sm-12">
+                        <span>{{ 'product_list' | translate }}:</span>
+                        <table class="table">
+                            <thead>
+                                <td>{{ 'product_code' | translate}}</td>
+                                <td>{{ 'product_name' | translate}}</td>
+                                <td>{{ 'amount' | translate}}</td>
+                                <td class="col-money">{{ 'Price' | translate}}</td>
+                                <td class="col-money">{{ 'summary_money' | translate}}</td>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let product of model.packageList">
+                                    <td class="text-small">{{ product.productCode}}</td>
+                                    <td class="text-small">{{ product.productName}}</td>
+                                    <td>
+                                        <span>{{ product.amount | spaceReplacer }}</span>
+                                    </td>
+                                    <td>
+                                        <div>{{ product.price | spaceReplacer }}</div>
+                                    </td>
+                                    <td>{{ product.totalMoney | spaceReplacer }}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row my-1">
+                    <div class="col-sm-12">
+                        <div>
+                            <strong>{{ 'TotalMoney' | translate }}:</strong>
+                            <span>{{ model.totalMoney}}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-3 utils-border">
+                <div class="row my-1">
+                    <div class="col-sm-12">
+                        <span>{{ 'customer_info' | translate }}:</span>
+                        <ul>
+                            <li> {{ 'name' | translate }}: {{model.fullName}}</li>
+                            <li> {{ 'phone' | translate }}: {{model.phoneNumber}}</li>
+                            <li> {{ 'email' | translate }}: {{model.email}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

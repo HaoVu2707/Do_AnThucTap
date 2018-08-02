@@ -1,0 +1,71 @@
+ <div class="modal-header">
+    <h4 class="modal-title">
+        <span *ngIf="!isEditMode">{{'add_service' | translate }}</span>
+        <span *ngIf="isEditMode">{{'edit_service' | translate }}</span>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<form #dataForm="ngForm" (ngSubmit)="onClickSaveBtn()" >
+  <div class="modal-body">
+      <div class="row">
+          <div class="col-sm-6">
+              <div class="form-group">
+                  <label>{{'name' | translate }}<i class="star">*</i></label>
+                  <input type="text" autofocus class="form-control" required [(ngModel)]="model.name"
+                   name="name" #name="ngModel"
+                  (ngModelChange)="onChangeNameValue(model.id, model.name)">
+                  <small class="form-text error" *ngIf="name.errors?.required && name?.touched">
+                      {{ "is_required" | translate }}
+                  </small>
+              </div>
+          </div>
+          <div class="col-sm-6">
+              <div class="form-group">
+                <label for="code">{{'code' | translate }}<i class="star">*</i></label>
+                <input type="text" class="form-control"  name="code" id="code"
+                  (ngModelChange)="onChangeCode($event)"
+                     required [(ngModel)]="model.code"  placeholder="Service_code" #code="ngModel"/>
+
+                <small class="form-text error" *ngIf="code.errors?.required && code.touched">
+                  {{ "is_required" | translate }}
+                </small>
+                <small class="form-text error" *ngIf="!code.errors?.required && code.touched && isDuplicatedCode">
+                  {{ "duplicated_value" | translate }}
+               </small>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-sm-12">
+              <div class="form-group">
+                  <label for="ServiceName">{{'ServiceName' | translate }}<i class="star">*</i></label>
+                  <select class="form-control" required [(ngModel)]="model.serviceCatagoryId"  name="ServiceName" #serviceCatagory="ngModel">
+                    <option value="{{item.id}}" *ngFor="let item of serviceCategoryList | sort:'name' " >{{item.name}}</option>
+                  </select>
+                </div>
+
+          </div>
+      </div>
+
+
+    <div class="row">
+      <div class="col-sm-12">
+          <div class="form-group">
+                  <label>{{'Price' | translate }}<i class="star">*</i></label>
+                  <input type="text" class="form-control" required  [(ngModel)]="model.price"  name="price"
+                      #price="ngModel">
+                  <small class="form-text error" *ngIf="price.errors?.required && price.touched">
+                      {{ "is_required" | translate }}
+                  </small>
+          </div>
+      </div>
+  </div>
+
+  </div>
+  <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="!dataForm.form.valid" >{{'save' | translate}}</button>
+  </div>
+</form>
+
